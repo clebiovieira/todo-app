@@ -1,5 +1,5 @@
 const webpack = require('webpack')
-const ExtractTextPlogin = require('extract-text-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 //exportar Objeto que vai ter toda configuração do projeto
 module.exports = {
@@ -25,7 +25,7 @@ module.exports = {
     },
     //Gerar o CSS
     plugins: [
-        new ExtractTextlugin('app.css')
+        new ExtractTextPlugin('app.css')
     ],
     module:{
         loaders: [{
