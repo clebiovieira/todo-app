@@ -8,6 +8,8 @@ const allowCors = require('./cors')
 
 server.use(bodyParser.urlencoded({extended: true}))
 server.use(bodyParser.json())
+//Habilitando o uso e CORS para seguranca
+server.use(allowCors)
 
 server.listen(port,function(){
     console.log(`BACKEND is running on port ${port}.`)
