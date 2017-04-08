@@ -20,12 +20,16 @@ export default class Todo extends Component {
         
         //Forçar o Bind e o this apontar quem foi o chamador, a propria classe        
         this.handleChange = this.handleChange.bind(this)
+
+        this.handleRemove = this.handleRemove.bind(this)
+
+        this.refresh()
     }
 
     handleAdd(){
         const description = this.state.description
         axios.post(URL,{description})
-            .then(resp => console.log('Funcionou'))
+            .then(resp => this.refresh())
         
         //This em funções normais é baseado em quem chamou a função
         //This aqui vai referenciar a classe por causa do Construtor fazendo Bind
@@ -38,6 +42,18 @@ export default class Todo extends Component {
         this.setState({...this.state, description: e.target.value})
     }
 
+    refresh(){
+        axios.get(`${URL}?sort=-createdAt`)
+            .then(resp => this.setState({...this.state, 
+                                        description: '',
+                                        list: resp.data}))
+    }
+    
+    handleRemove(todo){
+        axios.delete(`${URL}/${todo._id}`)
+            .then(resp => this.refresh())
+    }
+
     render(){
         return (
             <div>
@@ -46,7 +62,8 @@ export default class Todo extends Component {
                     description={this.state.description}
                     handleAdd={this.handleAdd}
                     handleChange={this.handleChange}/>
-                <TodoList/>
+                <TodoList list={this.state.list}
+                    handleRemove={this.handleRemove}/>
             </div>
         )
     }
