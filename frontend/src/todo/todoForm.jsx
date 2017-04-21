@@ -1,8 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 
 import Grid from '../template/grid'
 import IconButton from '../template/iconButton'
+
+import {changeDescription} from './todoActions'
+
 
 //<div className='col-xs-12 col-sm-9 col-md-10'>
 //<button className='btn btn-primary'>
@@ -25,7 +29,7 @@ const TodoForm = props => {
                 <input id='description' className='form-control' 
                     placeholder='Adicione uma tarefa'
                     value={props.description}
-                    onChange={props.handleChange}
+                    onChange={props.changeDescription}
                     onKeyUp={keyHandler} >
                 </input>
             </Grid>
@@ -45,6 +49,10 @@ const TodoForm = props => {
 //Mapear o estado com o redux (state.todo está no Reducer.js)
 const mapStateToProps =  state => ({description: state.todo.description})
 
-export default connect(mapStateToProps)(TodoForm)
+//dispatch é quem dispara a ação e passa a ação para todos os Reducers
+const mapDispatchToProps = dispatch => 
+    bindActionCreators({changeDescription},dispatch)
+
+export default connect(mapStateToProps,mapDispatchToProps)(TodoForm)
 
 
