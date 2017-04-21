@@ -1,4 +1,6 @@
 import React from 'react'
+import {connect} from 'react-redux'
+
 import Grid from '../template/grid'
 import IconButton from '../template/iconButton'
 
@@ -7,7 +9,7 @@ import IconButton from '../template/iconButton'
 //<i className='fa fa-plus'></i>
 //</button>
 
-export default props => {
+const TodoForm = props => {
     const keyHandler = (e) => {
             if(e.key === 'Enter'){
                 e.shiftKey ? props.handleSearch() : props.handleAdd()       
@@ -38,4 +40,11 @@ export default props => {
             </Grid>
         </div>
     )
-}    
+}
+
+//Mapear o estado com o redux (state.todo está no Reducer.js)
+const mapStateToProps =  state => ({description: state.todo.description})
+
+export default connect(mapStateToProps)(TodoForm)
+
+
