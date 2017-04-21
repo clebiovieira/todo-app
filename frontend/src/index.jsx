@@ -1,5 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom' //O arquivo que vai interagir direto com a DOM da pagina
+
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+
+
 //import { applyMiddleware, createStore } from 'redux'
 //import { Provider } from 'react-redux'
 
@@ -8,9 +13,15 @@ import ReactDOM from 'react-dom' //O arquivo que vai interagir direto com a DOM 
 //import thunk from 'redux-thunk'
 
 import App from './main/app'
-//import reducers from './main/reducers'
+import reducers from './main/reducers'
 
 //const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ 
 //    && window.__REDUX_DEVTOOLS_EXTENSION__()
 //const store = applyMiddleware(thunk, multi, promise)(createStore)(reducers, devTools)
-ReactDOM.render(<App/>,document.getElementById('app'))
+
+const store = createStore(reducers)
+ReactDOM.render(
+    <Provider store={store}>
+        <App/>
+    </Provider>
+    ,document.getElementById('app'))
