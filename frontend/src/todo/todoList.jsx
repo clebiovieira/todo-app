@@ -1,8 +1,12 @@
 import React from 'react'
+
+import {connect} from 'react-redux'
+
 import IconButton from '../template/iconButton'
 
-//Atençao que nao usei parenteses. Usei chave para corpo da funcao
-export default props => {
+
+const TodoList = props => {
+    
     const renderRows = () =>{
         //Se a lista esta nula entao garante um array vazio
         const list =  props.list || []
@@ -41,3 +45,9 @@ export default props => {
         </table>
     )
 }
+
+//Mapear o estado com o redux (state.todo está no Reducer.js)
+const mapStateToProps =  state => ({list: state.todo.list})
+
+export default connect(mapStateToProps)(TodoList)
+
