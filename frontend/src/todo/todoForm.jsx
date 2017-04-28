@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux'
 import Grid from '../template/grid'
 import IconButton from '../template/iconButton'
 
-import {changeDescription, search} from './todoActions'
+import {changeDescription, search, add} from './todoActions'
 
 
 //<div className='col-xs-12 col-sm-9 col-md-10'>
@@ -19,12 +19,15 @@ class TodoForm extends Component{
         this.keyHandler = this.keyHandler.bind(this)
     }
 
-    keyHandler(e){
-            if(e.key === 'Enter'){
-                e.shiftKey ? this.props.handleSearch() : this.props.handleAdd()       
-            }else if(e.key === 'Escape'){
-                props.handleClear()
-            }
+    keyHandler(e){        
+        //ECMA2015 - Extrair referencias de um objeto
+        const {add, search, description} = this.props
+
+        if(e.key === 'Enter'){
+            e.shiftKey ? search() : add(description)       
+        }else if(e.key === 'Escape'){
+            props.handleClear()
+        }
     }
 
     componentWillMount(){
@@ -32,6 +35,9 @@ class TodoForm extends Component{
     }
 
     render(){
+        //ECMA2015 - Extrair referencias de um objeto
+        const {add, search, description} = this.props
+
         return(
             <div role='form' className='todoForm'>
                 
@@ -46,9 +52,9 @@ class TodoForm extends Component{
                 
                 <Grid cols='12 3 2'>
                     <IconButton style='primary' icon='plus'
-                        onClick={this.props.handleAdd}/>
+                        onClick={()=>add(description)}/>
                     <IconButton style='info' icon='search'
-                        onClick={this.props.handleSearch}/>                
+                        onClick={()=>search()}/>
                     <IconButton style='default' icon='close'
                         onClick={this.props.handleClear}/>                
                 </Grid>
@@ -62,7 +68,7 @@ const mapStateToProps =  state => ({description: state.todo.description})
 
 //dispatch é quem dispara a ação e passa a ação para todos os Reducers
 const mapDispatchToProps = dispatch => 
-    bindActionCreators({changeDescription,search},dispatch)
+    bindActionCreators({add, changeDescription,search},dispatch)
 
 export default connect(mapStateToProps,mapDispatchToProps)(TodoForm)
 
