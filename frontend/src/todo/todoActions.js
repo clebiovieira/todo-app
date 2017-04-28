@@ -22,13 +22,12 @@ export const search = () => {
 }
 
 export const add = (description) => {
-    //return dispatch => {
-    const request = axios.post(URL, { description })
-    return [
-        {type: 'TODO_ADDED', payload: request},
-        search()
-    ]
-
+    //Dispatch envia a action para todos os reducers
+    //Garantindo que os reducers serao chamados na ordem correta
+    return dispatch => {
+        axios.post(URL, { description })
+            .then(resp => dispatch({type: 'TODO_ADDED', payload: resp.data}))
             //.then(resp => dispatch(clear()))
-            //.then(resp => dispatch(search()))
-}
+            .then(resp => dispatch(search()))
+    }    
+}    
