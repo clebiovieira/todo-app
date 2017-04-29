@@ -24,10 +24,26 @@ export const search = () => {
 export const add = (description) => {
     //Dispatch envia a action para todos os reducers
     //Garantindo que os reducers serao chamados na ordem correta
+    //Quando uso react-thunk ao inves do action creator retornar um método(action)
+    //posso retornar um método que tem como parametro o Dispatch 
     return dispatch => {
         axios.post(URL, { description })
             .then(resp => dispatch({type: 'TODO_ADDED', payload: resp.data}))
             //.then(resp => dispatch(clear()))
             .then(resp => dispatch(search()))
-    }    
-}    
+    }
+}
+
+export const markAsDone = (todo) => {
+    return dispatch => {
+        axios.put(`${URL}/${todo._id}`, { ...todo, done: true })            
+            .then(resp => dispatch(search()))
+    }
+}
+
+export const markAsPending = (todo) => {
+    return dispatch => {
+        axios.put(`${URL}/${todo._id}`, { ...todo, done: false })            
+            .then(resp => dispatch(search()))
+    }
+}
