@@ -8,17 +8,14 @@ export const changeDescription = event => ({
 })
 
 export const search = () => {
-    //return (dispatch, getState) => {
-    //    const description = getState().todo.description
-    //    const search = description ? `&description__regex=/${description}/` : ''
+    return (dispatch, getState) => {
+        //Pegar a descricao direto no estado
+        const description = getState().todo.description
         
-        const request = axios.get(`${URL}?sort=-createdAt`)
-        return {
-            type: 'TODO_SEARCHED', 
-            payload: request
-        }
-            //.then(resp => dispatch({type: 'TODO_SEARCHED', payload: resp.data}))
-    //}
+        const search = description ? `&description__regex=/${description}/` : ''        
+        const request = axios.get(`${URL}?sort=-createdAt${search}`)
+            .then(resp => dispatch({type: 'TODO_SEARCHED', payload: resp.data}))
+    }
 }
 
 export const add = (description) => {
