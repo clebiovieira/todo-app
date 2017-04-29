@@ -1,10 +1,10 @@
 # todo-app
 Lista de Tarefas Simples com intuíto de treinar os conceitos na integração das tecnologias.
-
-List of Simple Tasks.
-The main objective is to use concepts of integration about theses frameworks.
-
 Tecnologias:
+
+List of Simple Tasks in order to show how to use concepts of integration about theses frameworks.
+Technologies:
+
 
 FRONTEND:
 REACT, REACT-REDUX, AXIOS (Rest Client), WEBPACK, BOOTSTRAP....
