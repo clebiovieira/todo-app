@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux'
 import Grid from '../template/grid'
 import IconButton from '../template/iconButton'
 
-import {changeDescription, search, add} from './todoActions'
+import {changeDescription, search, add, clear} from './todoActions'
 
 
 //<div className='col-xs-12 col-sm-9 col-md-10'>
@@ -21,12 +21,12 @@ class TodoForm extends Component{
 
     keyHandler(e){        
         //ECMA2015 - Extrair referencias de um objeto
-        const {add, search, description} = this.props
+        const {add, clear, search, description} = this.props
 
         if(e.key === 'Enter'){
             e.shiftKey ? search() : add(description)       
         }else if(e.key === 'Escape'){
-            props.handleClear()
+            clear()
         }
     }
 
@@ -56,7 +56,7 @@ class TodoForm extends Component{
                     <IconButton style='info' icon='search'
                         onClick={()=>search()}/>
                     <IconButton style='default' icon='close'
-                        onClick={this.props.handleClear}/>                
+                        onClick={this.props.clear}/>
                 </Grid>
             </div>           
         )
@@ -68,7 +68,7 @@ const mapStateToProps =  state => ({description: state.todo.description})
 
 //dispatch é quem dispara a ação e passa a ação para todos os Reducers
 const mapDispatchToProps = dispatch => 
-    bindActionCreators({add, changeDescription,search},dispatch)
+    bindActionCreators({add, changeDescription,search, clear},dispatch)
 
 export default connect(mapStateToProps,mapDispatchToProps)(TodoForm)
 
